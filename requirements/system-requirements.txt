@@ -1,0 +1,3 @@
+sudo apt install ros-foxy-navigation2 ros-foxy-nav2-bringup
+sudo apt-get install ros-foxy-robot-localization*
+sudo apt-get install ros-foxy-xacro
