@@ -47,3 +47,11 @@ Source the ros2 installation folder
 ```
 colcon build --symlink-install
 ```
+
+# How to run
+
+
+1. To run robot localization
+```
+ros2 launch roomba_robot_localization.py
+```
