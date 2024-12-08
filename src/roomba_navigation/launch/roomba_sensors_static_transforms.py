@@ -10,7 +10,7 @@ def generate_launch_description():
         executable="static_transform_publisher",
         package="tf2_ros",
         output="screen",
-        arguments=["-0.105", "0", "0.126", "0", "0", "1", "base_footprint", "imu_link"]
+        arguments=["-0.105", "0", "0.126", "0", "0", "0", "base_footprint", "imu_link"]
     )
     
     lidar_static_publisher = Node(
@@ -18,7 +18,7 @@ def generate_launch_description():
         executable="static_transform_publisher",
         package="tf2_ros",
         output="screen",
-        arguments=["0", "0", "0.17", "0", "0", "1", "base_footprint", "laser_frame"]
+        arguments=["0", "0", "0.17", "0", "0", "0", "base_footprint", "laser_frame"]
     )
 
     ld = LaunchDescription()

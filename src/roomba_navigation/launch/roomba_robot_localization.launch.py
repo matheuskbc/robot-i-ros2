@@ -19,6 +19,8 @@ def generate_launch_description():
   pkg_share_description = FindPackageShare(package='create_description').find('create_description')
   pkg_share_navigation = FindPackageShare(package='roomba_navigation').find('roomba_navigation')
 
+  default_path_static_launch = os.path.join(pkg_share_navigation, "launch/roomba_sensors_static_transforms.py")
+
   # Declare the launch arguments 
   default_model_path = os.path.join(pkg_share_description, 'urdf/create_2.urdf.xacro')
   robot_localization_file_path = os.path.join(pkg_share_navigation, 'config/ekf.yaml') 
@@ -62,7 +64,7 @@ def generate_launch_description():
 
   incude_static_transforms = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(
-      ["/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/launch/roomba_sensors_static_transforms.py"]
+      [default_path_static_launch]
     )
   )
   
