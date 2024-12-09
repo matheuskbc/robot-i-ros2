@@ -55,3 +55,11 @@ colcon build --symlink-install
 ```
 ros2 launch roomba_robot_localization.py
 ```
+
+ros2 launch roomba_navigation roomba_robot_localization.launch.py
+
+ros2 launch roomba_navigation roomba_move_base_new.launch.py
+
+ros2 launch roomba_navigation roomba_rviz.launch.py
+
+ros2 launch slam_toolbox online_async_launch.py
