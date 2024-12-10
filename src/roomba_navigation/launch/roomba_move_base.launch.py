@@ -27,76 +27,83 @@ from launch.actions import GroupAction
 from launch_ros.actions import PushRosNamespace
 
 def generate_launch_description():
-    namespace_in = ""
-    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    map_dir = LaunchConfiguration(
-        'map',
-        default=os.path.join(
-            get_package_share_directory('roomba_navigation'),
-            'map',
-            'roomba_world.yaml'))
 
-    param_file_name = 'roomba_config.yaml'
-    param_dir = LaunchConfiguration(
-        'params_file',
-        default=os.path.join(
-            get_package_share_directory('roomba_navigation'),
-            'param',
-            param_file_name))
 
-    nav2_launch_file_dir = os.path.join(get_package_share_directory('nav2_bringup'), 'launch')
+    # File management
+    nav2_launch_file_dir = os.path.join(get_package_share_directory("nav2_bringup"), "launch")
 
-    rviz_config_dir = os.path.join(
-        get_package_share_directory('nav2_bringup'),
-        'rviz',
-        'nav2_default_view.rviz')
+    # Declare parameters
+    param_map_file = DeclareLaunchArgument(
+        name="map_file",
+        default_value=os.path.join(
+            get_package_share_directory("roomba_navigation"),
+            "map",
+            "roomba_world.yaml"
+        ),
+        description="Full path to map file to load",
+    )
 
-    launch_include_with_namespace = GroupAction(
+    param_config_file = DeclareLaunchArgument(
+        name="config_file",
+        default_value=os.path.join(
+            get_package_share_directory("roomba_navigation"), 
+            "config", 
+            "roomba_config.yaml"
+        ),
+        description="Full path to map file to load",
+    )
+
+    param_use_slam = DeclareLaunchArgument(
+        name="use_slam",
+        default_value="True",
+        description="Use SLAM launch files",
+    )
+
+    param_use_sim_time = DeclareLaunchArgument(
+        name="use_sim_time",
+        default_value="False",
+        description="Whether or not use simulation time",
+    )
+    
+    # Solve for configurations
+    map_file = LaunchConfiguration(
+        param_map_file.name,
+    )
+    config_file = LaunchConfiguration(
+        param_config_file.name,
+    )
+
+    use_slam = LaunchConfiguration(
+        param_use_slam.name,
+    )
+
+    use_sim_time = LaunchConfiguration(
+        param_use_sim_time.name
+    )
+
+    # Actions
+    action_launch_include_with_namespace = GroupAction(
         actions=[
-            # push-ros-namespace to set namespace of included nodes
-            PushRosNamespace(namespace_in),
+            PushRosNamespace(""),
             IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([nav2_launch_file_dir, '/bringup_launch.py']),
+                PythonLaunchDescriptionSource([nav2_launch_file_dir, "/bringup_launch.py"]),
                 launch_arguments={
-                    'map': map_dir,
-                    'use_sim_time': use_sim_time,
-                    'params_file': param_dir}.items(),
-                    
+                    "map": map_file, #"/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/map/roomba_world.yaml", # map_file,
+                    "use_sim_time": use_sim_time,
+                    "params_file": config_file, #"/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/config/roomba_config.yaml", # config_file.
+                    "slam": use_slam
+                }.items(),   
             ),
         ]
     )
 
-    return LaunchDescription([
-        DeclareLaunchArgument(
-            'map',
-            default_value=map_dir,
-            description='Full path to map file to load'),
+    # Launch description
+    ld = LaunchDescription()
 
-        DeclareLaunchArgument(
-            'params_file',
-            default_value=param_dir,
-            description='Full path to param file to load'),
+    ld.add_action(param_map_file)
+    ld.add_action(param_config_file)
+    ld.add_action(param_use_slam)
+    ld.add_action(param_use_sim_time)
+    ld.add_action(action_launch_include_with_namespace)
 
-        DeclareLaunchArgument(
-            'use_sim_time',
-            default_value='false',
-            description='Use simulation (Gazebo) clock if true'),
-
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource([nav2_launch_file_dir, '/bringup_launch.py']),
-        #     launch_arguments={
-        #         'map': map_dir,
-        #         'use_sim_time': use_sim_time,
-        #         'params_file': param_dir}.items(),
-        # ),
-        launch_include_with_namespace,
-
-        Node(
-            package='rviz2',
-            namespace=namespace_in,
-            executable='rviz2',
-            name='rviz2',
-            arguments=['-d', rviz_config_dir],
-            parameters=[{'use_sim_time': use_sim_time}],
-            output='screen'),
-    ])
+    return ld

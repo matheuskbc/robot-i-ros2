@@ -18,12 +18,11 @@ def generate_launch_description():
   # File management section
   pkg_share_description = FindPackageShare(package='create_description').find('create_description')
   pkg_share_navigation = FindPackageShare(package='roomba_navigation').find('roomba_navigation')
-
   default_path_static_launch = os.path.join(pkg_share_navigation, "launch/roomba_sensors_static_transforms.py")
-
-  # Declare the launch arguments 
   default_model_path = os.path.join(pkg_share_description, 'urdf/create_2.urdf.xacro')
   robot_localization_file_path = os.path.join(pkg_share_navigation, 'config/ekf.yaml') 
+
+  # Declare the launch arguments 
 
   param_declare_model_path = DeclareLaunchArgument(
     name='model', 
@@ -57,8 +56,11 @@ def generate_launch_description():
     condition=IfCondition(use_robot_state_pub),
     package='robot_state_publisher',
     executable='robot_state_publisher',
-    parameters=[{ 
-    'robot_description': Command(['xacro ', model])}],
+    parameters=[
+      { 
+      'robot_description': Command(['xacro ', model])
+      }
+    ],
     arguments=[default_model_path]
   )
 
@@ -79,6 +81,5 @@ def generate_launch_description():
   ld.add_action(start_robot_localization_cmd)
   ld.add_action(start_robot_state_publisher_cmd)
   ld.add_action(incude_static_transforms)
-
 
   return ld
