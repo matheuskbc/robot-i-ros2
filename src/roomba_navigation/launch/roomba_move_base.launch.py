@@ -84,14 +84,14 @@ def generate_launch_description():
     # Actions
     action_launch_include_with_namespace = GroupAction(
         actions=[
-            PushRosNamespace(""),
+            # PushRosNamespace(""),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([nav2_launch_file_dir, "/bringup_launch.py"]),
                 launch_arguments={
-                    "map": map_file, #"/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/map/roomba_world.yaml", # map_file,
+                    "map": map_file,
                     "use_sim_time": use_sim_time,
                     "params_file": config_file, #"/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/config/roomba_config.yaml", # config_file.
-                    "slam": use_slam
+                    "slam": use_slam,
                 }.items(),   
             ),
         ]

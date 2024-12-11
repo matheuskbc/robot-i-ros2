@@ -1,4 +1,4 @@
-image: roomba_world.pgm
+image: /home/matheus/Projects/robot-i-ros2/src/roomba_navigation/map/roomba_world.pgm
 resolution: 0.050000
 origin: [-10.000000, -10.000000, 0.000000]
 negate: 0
