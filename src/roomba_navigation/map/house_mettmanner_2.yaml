@@ -1,0 +1,7 @@
+image: /home/matheus/Projects/robot-i-ros2/src/roomba_navigation/map/house_mettmanner_2.pgm
+mode: raw
+resolution: 0.05
+origin: [-6.71, -2.95, 0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25
