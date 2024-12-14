@@ -11,10 +11,9 @@ def generate_launch_description():
         default_value=os.path.join(
             get_package_share_directory("roomba_navigation"), 
             "config", 
-            "roomba_config.yaml"
+            "amcl_config.yaml"
         )
     )
-
     remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
     start_amcl = GroupAction(
     actions=[
@@ -25,7 +24,7 @@ def generate_launch_description():
             output='screen',
             respawn='false',
             respawn_delay=2.0,
-            # parameters=[LaunchConfiguration(param_config_file.name)],
+            parameters=[LaunchConfiguration(param_config_file.name)],
             arguments=['--ros-args', '--log-level', 'info'],
             remappings=remappings,
         ),

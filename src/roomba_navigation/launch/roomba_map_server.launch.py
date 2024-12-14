@@ -27,7 +27,7 @@ def generate_launch_description():
             respawn="false",
             respawn_delay=2.0,
             arguments=['--ros-args', '--log-level', 'info'],
-            parameters=[LaunchConfiguration(param_config_file.name), {'yaml_filename': '/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/map/house_mettmanner_2.yaml'}],
+            parameters=[LaunchConfiguration(param_config_file.name), {'yaml_filename': '/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/map/bed_room.yaml'}],
             remappings=remappings,
         ),
         Node(
