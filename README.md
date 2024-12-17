@@ -63,3 +63,25 @@ ros2 launch roomba_navigation roomba_move_base.launch.py
 ros2 launch roomba_navigation roomba_rviz.launch.py
 
 ros2 launch slam_toolbox online_async_launch.py
+
+ros2 launch roomba_navigation roomba_map_server.launch.py
+
+
+```
+ros2 service call /map_saver/save_map nav2_msgs/srv/SaveMap "map_topic: 'map'
+map_url: '/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/map/house'
+image_format: 'pgm'
+map_mode: 'raw'
+free_thresh: 0.0
+occupied_thresh: 0.0"
+```
+
+```
+ros2 launch roomba_navigation roomba_map_server.launch.py
+
+ros2 launch roomba_navigation roomba_rviz.launch.py
+
+ros2 launch roomba_navigation roomba_amcl.launch.py
+
+ros2 launch roomba_navigation roomba_navigation.launch.py
+```

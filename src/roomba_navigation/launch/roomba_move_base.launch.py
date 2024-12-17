@@ -90,7 +90,7 @@ def generate_launch_description():
                 launch_arguments={
                     "map": map_file,
                     "use_sim_time": use_sim_time,
-                    "params_file": config_file, #"/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/config/roomba_config.yaml", # config_file.
+                    "params_file": config_file,
                     "slam": use_slam,
                 }.items(),   
             ),
