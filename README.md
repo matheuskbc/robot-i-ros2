@@ -50,11 +50,24 @@ colcon build --symlink-install
 
 # How to run
 
+Run the following commands:
 
-1. To run robot localization
 ```
+ros2 launch roomba_navigation roomba_map_server.launch.py
+
+ros2 launch roomba_navigation roomba_amcl.launch.py
+
+ros2 launch roomba_navigation roomba_navigation.launch.py
+
+ros2 launch roomba_navigation roomba_rviz.launch.py
+```
+
+Other commands:
+
+```
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel
+
 ros2 launch roomba_robot_localization.py
-```
 
 ros2 launch roomba_navigation roomba_robot_localization.launch.py
 
@@ -65,23 +78,24 @@ ros2 launch roomba_navigation roomba_rviz.launch.py
 ros2 launch slam_toolbox online_async_launch.py
 
 ros2 launch roomba_navigation roomba_map_server.launch.py
+```
 
+# How to map
+
+```
+ros2 launch roomba_navigation roomba_move_base.launch.py use_slam:=True
+
+ros2 launch roomba_navigation roomba_rviz.launch.py
+```
+
+How to save map
 
 ```
 ros2 service call /map_saver/save_map nav2_msgs/srv/SaveMap "map_topic: 'map'
-map_url: '/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/map/house'
+map_url: '/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/map/room_updated'
 image_format: 'pgm'
 map_mode: 'raw'
 free_thresh: 0.0
 occupied_thresh: 0.0"
 ```
 
-```
-ros2 launch roomba_navigation roomba_map_server.launch.py
-
-ros2 launch roomba_navigation roomba_rviz.launch.py
-
-ros2 launch roomba_navigation roomba_amcl.launch.py
-
-ros2 launch roomba_navigation roomba_navigation.launch.py
-```
