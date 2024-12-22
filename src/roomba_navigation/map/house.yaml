@@ -1,4 +1,4 @@
-image: /home/matheus/Projects/robot-i-ros2/src/roomba_navigation/map/house.pgm
+image: house.pgm
 mode: raw
 resolution: 0.05
 origin: [-9.77, -16.1, 0]
