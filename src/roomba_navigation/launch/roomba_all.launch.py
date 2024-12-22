@@ -25,6 +25,6 @@ def generate_launch_description():
     ld = LaunchDescription()
     ld.add_action(amcl_launch)
     ld.add_action(map_launch)
-    # ld.add_action(mobe_base_launch)
+    ld.add_action(mobe_base_launch)
 
     return ld
