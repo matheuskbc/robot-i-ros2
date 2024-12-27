@@ -10,12 +10,26 @@ services:
     restart: always
     privileged: true
     container_name: roomba_navigation
+    depends_on:
+      roomba_noetic:
+        condition: service_healthy
+      roomba_bridge:
+        condition: service_healthy
 
   roomba_bridge:
     image: ros12bridge-roomba_bridge
     network_mode: host
     restart: always
     privileged: true
+    depends_on:
+      roomba_noetic:
+        condition: service_healthy
+    healthcheck:
+      test: "exit 0"
+      interval: 30s
+      timeout: 30s
+      retries: 1
+      start_period: 30s
 
   roomba_noetic:
     image: robot-i-ros1-roomba_noetic
@@ -25,3 +39,9 @@ services:
     volumes:
       -
         /dev:/dev
+    healthcheck:
+      test: "exit 0"
+      interval: 30s
+      timeout: 30s
+      retries: 1
+      start_period: 30s
