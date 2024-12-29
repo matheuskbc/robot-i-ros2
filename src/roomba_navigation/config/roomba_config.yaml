@@ -85,11 +85,12 @@ bt_navigator:
     # - nav2_transform_available_condition_bt_node
     # - nav2_time_expired_condition_bt_node
     # - nav2_distance_traveled_condition_bt_node
-    navigators: ["navigate_to_pose", "navigate_through_poses"]
+    # navigators: ["navigate_to_pose", "navigate_through_poses"]
+    navigators: ["navigate_to_pose"]
     navigate_to_pose:
       plugin: "nav2_bt_navigator::NavigateToPoseNavigator"
-    navigate_through_poses:
-      plugin: "nav2_bt_navigator::NavigateThroughPosesNavigator"
+    # navigate_through_poses:
+    #   plugin: "nav2_bt_navigator::NavigateThroughPosesNavigator"
     error_code_names:
       - compute_path_error_code
       - follow_path_error_code
