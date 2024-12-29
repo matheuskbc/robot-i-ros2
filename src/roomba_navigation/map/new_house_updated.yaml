@@ -1,4 +1,4 @@
-image: new_house.pgm
+image: new_house_updated.pgm
 mode: trinary
 resolution: 0.05
 origin: [-11.9, -6.92, 0]
