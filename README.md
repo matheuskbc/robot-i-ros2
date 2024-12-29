@@ -88,6 +88,13 @@ ros2 launch roomba_navigation roomba_move_base.launch.py use_slam:=True
 ros2 launch roomba_navigation roomba_rviz.launch.py
 ```
 
+
+```
+Alternatively from a docker image
+
+sudo docker run -it --rm --name mapping robot-i-ros2-roomba_navigation bash "scripts/start_mapping.bash"
+```
+
 How to save map
 
 ```
