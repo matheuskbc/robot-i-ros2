@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   roomba_navigation:
+    tty: true
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -17,6 +18,7 @@ services:
         condition: service_healthy
 
   roomba_bridge:
+    tty: true
     image: ros12bridge-roomba_bridge
     network_mode: host
     restart: always
