@@ -30,7 +30,7 @@ def generate_launch_description():
             package='nav2_map_server',
             executable='map_server',
             output='screen',
-            respawn="false",
+            respawn=False,
             respawn_delay=2.0,
             arguments=['--ros-args', '--log-level', 'info'],
             parameters=[

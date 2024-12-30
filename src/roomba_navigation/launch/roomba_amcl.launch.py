@@ -22,7 +22,7 @@ def generate_launch_description():
             executable='amcl',
             name='amcl',
             output='screen',
-            respawn='false',
+            respawn=False,
             respawn_delay=2.0,
             parameters=[LaunchConfiguration(param_config_file.name)],
             arguments=['--ros-args', '--log-level', 'info'],
