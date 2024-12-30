@@ -100,7 +100,7 @@ def generate_launch_description():
             'behavior_trees', 
             'navigate_w_replanning_and_recovery.xml'
         ),
-        "map_subscribe_transient_local": False
+        "map_subscribe_transient_local": 'False'
     }
 
     configured_params = RewrittenYaml(
