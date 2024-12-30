@@ -99,7 +99,8 @@ def generate_launch_description():
             get_package_share_directory('nav2_bt_navigator'), 
             'behavior_trees', 
             'navigate_w_replanning_and_recovery.xml'
-        )
+        ),
+        "map_subscribe_transient_local": False
     }
 
     configured_params = RewrittenYaml(
