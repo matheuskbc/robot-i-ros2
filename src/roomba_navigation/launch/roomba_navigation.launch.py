@@ -8,7 +8,7 @@ from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch_ros.actions import LoadComposableNodes, SetParameter
 from launch_ros.actions import Node
-from launch_ros.descriptions import ComposableNode, ParameterFile
+from launch_ros.descriptions import ComposableNode
 from nav2_common.launch import RewrittenYaml
 
 
@@ -28,14 +28,14 @@ def generate_launch_description():
 
     lifecycle_nodes = [
         'controller_server',
-        'smoother_server',
+        # 'smoother_server',
         'planner_server',
-        'behavior_server',
-        'velocity_smoother',
-        'collision_monitor',
+        # 'behavior_server',
+        # 'velocity_smoother',
+        # 'collision_monitor',
         'bt_navigator',
         'waypoint_follower',
-        'docking_server',
+        # 'docking_server',
     ]
 
     # Map fully qualified names to relative ones so the node's namespace can be prepended.
@@ -49,15 +49,16 @@ def generate_launch_description():
     # Create our own temporary YAML files that include substitutions
     param_substitutions = {'autostart': autostart}
 
-    configured_params = ParameterFile(
-        RewrittenYaml(
-            source_file=params_file,
-            root_key=namespace,
-            param_rewrites=param_substitutions,
-            convert_types=True,
-        ),
-        allow_substs=True,
-    )
+    # configured_params = ParameterFile(
+    #     RewrittenYaml(
+    #         source_file=params_file,
+    #         root_key=namespace,
+    #         param_rewrites=param_substitutions,
+    #         convert_types=True,
+    #     ),
+    #     allow_substs=True,
+    # )
+    configured_params = "/home/matheus/Projects/robot-i-ros2/src/roomba_navigation/config/nav2_config.yaml"
 
     stdout_linebuf_envvar = SetEnvironmentVariable(
         'RCUTILS_LOGGING_BUFFERED_STREAM', '1'
@@ -117,21 +118,21 @@ def generate_launch_description():
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
-                parameters=[configured_params],
+                parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
             ),
-            Node(
-                package='nav2_smoother',
-                executable='smoother_server',
-                name='smoother_server',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings,
-            ),
+            # Node(
+            #     package='nav2_smoother',
+            #     executable='smoother_server',
+            #     name='smoother_server',
+            #     output='screen',
+            #     respawn=use_respawn,
+            #     respawn_delay=2.0,
+            #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+            #     arguments=['--ros-args', '--log-level', log_level],
+            #     remappings=remappings,
+            # ),
             Node(
                 package='nav2_planner',
                 executable='planner_server',
@@ -139,21 +140,21 @@ def generate_launch_description():
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
-                parameters=[configured_params],
+                parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings,
             ),
-            Node(
-                package='nav2_behaviors',
-                executable='behavior_server',
-                name='behavior_server',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
-            ),
+            # Node(
+            #     package='nav2_behaviors',
+            #     executable='behavior_server',
+            #     name='behavior_server',
+            #     output='screen',
+            #     respawn=use_respawn,
+            #     respawn_delay=2.0,
+            #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+            #     arguments=['--ros-args', '--log-level', log_level],
+            #     remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
+            # ),
             Node(
                 package='nav2_bt_navigator',
                 executable='bt_navigator',
@@ -161,7 +162,7 @@ def generate_launch_description():
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
-                parameters=[configured_params],
+                parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings,
             ),
@@ -172,44 +173,44 @@ def generate_launch_description():
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
-                parameters=[configured_params],
+                parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings,
             ),
-            Node(
-                package='nav2_velocity_smoother',
-                executable='velocity_smoother',
-                name='velocity_smoother',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings
-                + [('cmd_vel', 'cmd_vel_nav')],
-            ),
-            Node(
-                package='nav2_collision_monitor',
-                executable='collision_monitor',
-                name='collision_monitor',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings,
-            ),
-            Node(
-                package='opennav_docking',
-                executable='opennav_docking',
-                name='docking_server',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings,
-            ),
+            # Node(
+            #     package='nav2_velocity_smoother',
+            #     executable='velocity_smoother',
+            #     name='velocity_smoother',
+            #     output='screen',
+            #     respawn=use_respawn,
+            #     respawn_delay=2.0,
+            #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+            #     arguments=['--ros-args', '--log-level', log_level],
+            #     remappings=remappings
+            #     + [('cmd_vel', 'cmd_vel_nav')],
+            # ),
+            # Node(
+            #     package='nav2_collision_monitor',
+            #     executable='collision_monitor',
+            #     name='collision_monitor',
+            #     output='screen',
+            #     respawn=use_respawn,
+            #     respawn_delay=2.0,
+            #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+            #     arguments=['--ros-args', '--log-level', log_level],
+            #     remappings=remappings,
+            # ),
+            # Node(
+            #     package='opennav_docking',
+            #     executable='opennav_docking',
+            #     name='docking_server',
+            #     output='screen',
+            #     respawn=use_respawn,
+            #     respawn_delay=2.0,
+            #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+            #     arguments=['--ros-args', '--log-level', log_level],
+            #     remappings=remappings,
+            # ),
             Node(
                 package='nav2_lifecycle_manager',
                 executable='lifecycle_manager',
@@ -232,66 +233,66 @@ def generate_launch_description():
                         package='nav2_controller',
                         plugin='nav2_controller::ControllerServer',
                         name='controller_server',
-                        parameters=[configured_params],
+                        parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
                         remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
                     ),
-                    ComposableNode(
-                        package='nav2_smoother',
-                        plugin='nav2_smoother::SmootherServer',
-                        name='smoother_server',
-                        parameters=[configured_params],
-                        remappings=remappings,
-                    ),
+                    # ComposableNode(
+                    #     package='nav2_smoother',
+                    #     plugin='nav2_smoother::SmootherServer',
+                    #     name='smoother_server',
+                    #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                    #     remappings=remappings,
+                    # ),
                     ComposableNode(
                         package='nav2_planner',
                         plugin='nav2_planner::PlannerServer',
                         name='planner_server',
-                        parameters=[configured_params],
+                        parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
                         remappings=remappings,
                     ),
-                    ComposableNode(
-                        package='nav2_behaviors',
-                        plugin='behavior_server::BehaviorServer',
-                        name='behavior_server',
-                        parameters=[configured_params],
-                        remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
-                    ),
+                    # ComposableNode(
+                    #     package='nav2_behaviors',
+                    #     plugin='behavior_server::BehaviorServer',
+                    #     name='behavior_server',
+                    #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                    #     remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
+                    # ),
                     ComposableNode(
                         package='nav2_bt_navigator',
                         plugin='nav2_bt_navigator::BtNavigator',
                         name='bt_navigator',
-                        parameters=[configured_params],
+                        parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
                         remappings=remappings,
                     ),
                     ComposableNode(
                         package='nav2_waypoint_follower',
                         plugin='nav2_waypoint_follower::WaypointFollower',
                         name='waypoint_follower',
-                        parameters=[configured_params],
+                        parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
                         remappings=remappings,
                     ),
-                    ComposableNode(
-                        package='nav2_velocity_smoother',
-                        plugin='nav2_velocity_smoother::VelocitySmoother',
-                        name='velocity_smoother',
-                        parameters=[configured_params],
-                        remappings=remappings
-                        + [('cmd_vel', 'cmd_vel_nav')],
-                    ),
-                    ComposableNode(
-                        package='nav2_collision_monitor',
-                        plugin='nav2_collision_monitor::CollisionMonitor',
-                        name='collision_monitor',
-                        parameters=[configured_params],
-                        remappings=remappings,
-                    ),
-                    ComposableNode(
-                        package='opennav_docking',
-                        plugin='opennav_docking::DockingServer',
-                        name='docking_server',
-                        parameters=[configured_params],
-                        remappings=remappings,
-                    ),
+                    # ComposableNode(
+                    #     package='nav2_velocity_smoother',
+                    #     plugin='nav2_velocity_smoother::VelocitySmoother',
+                    #     name='velocity_smoother',
+                    #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                    #     remappings=remappings
+                    #     + [('cmd_vel', 'cmd_vel_nav')],
+                    # ),
+                    # ComposableNode(
+                    #     package='nav2_collision_monitor',
+                    #     plugin='nav2_collision_monitor::CollisionMonitor',
+                    #     name='collision_monitor',
+                    #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                    #     remappings=remappings,
+                    # ),
+                    # ComposableNode(
+                    #     package='opennav_docking',
+                    #     plugin='opennav_docking::DockingServer',
+                    #     name='docking_server',
+                    #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                    #     remappings=remappings,
+                    # ),
                     ComposableNode(
                         package='nav2_lifecycle_manager',
                         plugin='nav2_lifecycle_manager::LifecycleManager',

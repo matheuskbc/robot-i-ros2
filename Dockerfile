@@ -9,10 +9,7 @@ RUN echo "Installing dependencies..." \
     && apt-get update -yq \
     && sudo apt-get install -y \
     pip \
-    ros-foxy-nav2-map-server \
-    ros-foxy-nav2-lifecycle-manager \
-    ros-foxy-nav2-amcl \
-    ros-foxy-nav2-bringup \
+    ros-foxy-nav2-* \
     ros-foxy-rmw-cyclonedds-cpp
 
 RUN pip install -U \
