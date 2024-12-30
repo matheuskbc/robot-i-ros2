@@ -94,6 +94,21 @@ def generate_launch_description():
         'log_level', default_value='info', description='log level'
     )
 
+    param_substitutions = {
+        'default_bt_xml_filename': os.path.join(
+            get_package_share_directory('nav2_bt_navigator'), 
+            'behavior_trees', 
+            'navigate_w_replanning_and_recovery.xml'
+        )
+    }
+
+    configured_params = RewrittenYaml(
+            source_file=params_file,
+            root_key=namespace,
+            param_rewrites=param_substitutions,
+            convert_types=True
+        )
+
     load_nodes = GroupAction(
         condition=IfCondition(PythonExpression(['not ', use_composition])),
         actions=[
@@ -104,7 +119,7 @@ def generate_launch_description():
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
-                parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
             ),
@@ -115,7 +130,7 @@ def generate_launch_description():
             #     output='screen',
             #     respawn=use_respawn,
             #     respawn_delay=2.0,
-            #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+            #     parameters=[configured_params],
             #     arguments=['--ros-args', '--log-level', log_level],
             #     remappings=remappings,
             # ),
@@ -126,7 +141,7 @@ def generate_launch_description():
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
-                parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings,
             ),
@@ -137,7 +152,7 @@ def generate_launch_description():
             #     output='screen',
             #     respawn=use_respawn,
             #     respawn_delay=2.0,
-            #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+            #     parameters=[configured_params],
             #     arguments=['--ros-args', '--log-level', log_level],
             #     remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
             # ),
@@ -148,7 +163,7 @@ def generate_launch_description():
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
-                parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings,
             ),
@@ -159,7 +174,7 @@ def generate_launch_description():
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
-                parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings,
             ),
@@ -170,7 +185,7 @@ def generate_launch_description():
             #     output='screen',
             #     respawn=use_respawn,
             #     respawn_delay=2.0,
-            #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+            #     parameters=[configured_params],
             #     arguments=['--ros-args', '--log-level', log_level],
             #     remappings=remappings
             #     + [('cmd_vel', 'cmd_vel_nav')],
@@ -182,7 +197,7 @@ def generate_launch_description():
             #     output='screen',
             #     respawn=use_respawn,
             #     respawn_delay=2.0,
-            #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+            #     parameters=[configured_params],
             #     arguments=['--ros-args', '--log-level', log_level],
             #     remappings=remappings,
             # ),
@@ -193,7 +208,7 @@ def generate_launch_description():
             #     output='screen',
             #     respawn=use_respawn,
             #     respawn_delay=2.0,
-            #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+            #     parameters=[configured_params],
             #     arguments=['--ros-args', '--log-level', log_level],
             #     remappings=remappings,
             # ),
@@ -219,49 +234,49 @@ def generate_launch_description():
                         package='nav2_controller',
                         plugin='nav2_controller::ControllerServer',
                         name='controller_server',
-                        parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                        parameters=[configured_params],
                         remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
                     ),
                     # ComposableNode(
                     #     package='nav2_smoother',
                     #     plugin='nav2_smoother::SmootherServer',
                     #     name='smoother_server',
-                    #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                    #     parameters=[configured_params],
                     #     remappings=remappings,
                     # ),
                     ComposableNode(
                         package='nav2_planner',
                         plugin='nav2_planner::PlannerServer',
                         name='planner_server',
-                        parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                        parameters=[configured_params],
                         remappings=remappings,
                     ),
                     # ComposableNode(
                     #     package='nav2_behaviors',
                     #     plugin='behavior_server::BehaviorServer',
                     #     name='behavior_server',
-                    #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                    #     parameters=[configured_params],
                     #     remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
                     # ),
                     ComposableNode(
                         package='nav2_bt_navigator',
                         plugin='nav2_bt_navigator::BtNavigator',
                         name='bt_navigator',
-                        parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                        parameters=[configured_params],
                         remappings=remappings,
                     ),
                     ComposableNode(
                         package='nav2_waypoint_follower',
                         plugin='nav2_waypoint_follower::WaypointFollower',
                         name='waypoint_follower',
-                        parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                        parameters=[configured_params],
                         remappings=remappings,
                     ),
                     # ComposableNode(
                     #     package='nav2_velocity_smoother',
                     #     plugin='nav2_velocity_smoother::VelocitySmoother',
                     #     name='velocity_smoother',
-                    #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                    #     parameters=[configured_params],
                     #     remappings=remappings
                     #     + [('cmd_vel', 'cmd_vel_nav')],
                     # ),
@@ -269,14 +284,14 @@ def generate_launch_description():
                     #     package='nav2_collision_monitor',
                     #     plugin='nav2_collision_monitor::CollisionMonitor',
                     #     name='collision_monitor',
-                    #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                    #     parameters=[configured_params],
                     #     remappings=remappings,
                     # ),
                     # ComposableNode(
                     #     package='opennav_docking',
                     #     plugin='opennav_docking::DockingServer',
                     #     name='docking_server',
-                    #     parameters=[LaunchConfiguration(declare_params_file_cmd.name)],
+                    #     parameters=[configured_params],
                     #     remappings=remappings,
                     # ),
                     ComposableNode(
