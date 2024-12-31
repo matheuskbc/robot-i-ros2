@@ -57,8 +57,8 @@ controller_server:
       angular_granularity: 0.025
       transform_tolerance: 0.2
 
-      xy_goal_tolerance: 0.50 #0.05
-      yaw_goal_tolerance: 0.25 #0.2
+      xy_goal_tolerance: 0.05
+      yaw_goal_tolerance: 0.2
       
       trans_stopped_velocity: 0.25
       short_circuit_trajectory_evaluation: True
