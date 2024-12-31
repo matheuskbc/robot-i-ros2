@@ -43,9 +43,9 @@ controller_server:
       min_speed_xy: 0.0
       max_speed_xy: 0.1 # 0.26
       min_speed_theta: 0.0
-      acc_lim_x: 2.5 # 2.5
+      acc_lim_x: 0.05 # 2.5
       acc_lim_y: 0.0
-      acc_lim_theta: 3.2 #3.2
+      acc_lim_theta: 0.2 #3.2
       decel_lim_x: -2.5
       decel_lim_y: 0.0
       decel_lim_theta: -3.2
@@ -214,7 +214,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.05 #0.7
+        inflation_radius: 0.7
       always_send_full_costmap: True
 
 waypoint_follower:
