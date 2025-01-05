@@ -19,7 +19,7 @@ def generate_launch_description():
         default_value=os.path.join(
             get_package_share_directory("roomba_navigation"), 
             "map", 
-            "new_house_updated.yaml"
+            "house.yaml"
         ),
     )
     remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
