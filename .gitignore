@@ -8,7 +8,6 @@ robot-i-ros1-venv/**
 
 # Sub modules
 create_robot
-sweep_ros
 
 
 *.png
