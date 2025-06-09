@@ -9,8 +9,6 @@ from launch.substitutions import LaunchConfiguration
 def generate_launch_description():
 
     roomba_navigation_path_ir = get_package_share_directory("roomba_navigation")
-    sweep_ros_path_ir = get_package_share_directory("sweep_ros")
-
 
     amcl_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([roomba_navigation_path_ir, "/launch/roomba_amcl.launch.py"]),
@@ -24,14 +22,9 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([roomba_navigation_path_ir, "/launch/roomba_navigation.launch.py"]),
     )
 
-    sweep_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([sweep_ros_path_ir, "/launch/sweep_launch.py"]),
-    )
-
     ld = LaunchDescription()
     ld.add_action(amcl_launch)
     ld.add_action(map_launch)
     ld.add_action(mobe_base_launch)
-    ld.add_action(sweep_launch)
 
     return ld
