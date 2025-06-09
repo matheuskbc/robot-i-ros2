@@ -22,6 +22,7 @@
   <run_depend>roscpp</run_depend> -->
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>pointcloud_to_laserscan</exec_depend>
+  <exec_depend>pcl_conversions</exec_depend>
 
   <exec_depend>ros2launch</exec_depend>
 
