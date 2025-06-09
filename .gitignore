@@ -6,9 +6,6 @@ log/**
 bin/**
 robot-i-ros1-venv/**
 
-# Sub modules
-create_robot
-
 
 *.png
 *.jpg
