@@ -17,17 +17,18 @@ RUN pip install -U \
     colcon-common-extensions \
     rosdep
 
-
 # Copy directories
 COPY ./src/roomba_bringup ./src/roomba_bringup
 COPY ./src/sweep_ros ./src/sweep_ros
+COPY ./scripts ./scripts
+WORKDIR /usr/src/ros2_ws/src
 RUN git clone https://github.com/autonomylab/create_robot.git
 RUN cd create_robot && \
     git checkout foxy
 RUN git clone https://github.com/AutonomyLab/libcreate.git
-COPY ./scripts ./scripts
 
 # Install ros depedencies
+WORKDIR /usr/src/ros2_ws/
 RUN . /opt/ros/foxy/setup.sh \
     && apt-get update --fix-missing \
     && rosdep install --from-paths src -y --ignore-src
