@@ -106,3 +106,8 @@ free_thresh: 0.0
 occupied_thresh: 0.0"
 ```
 
+# New how to
+
+- ros2 launch roomba_navigation roomba_sensors_static_transforms.py
+- ros2 launch roomba_navigation roomba_all.launch.py
+- ros2 launch roomba_navigation roomba_rviz.launch.py
