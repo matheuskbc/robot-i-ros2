@@ -14,7 +14,7 @@ def generate_launch_description():
           {"transform_tolerance": 0.001},
           {"min_height": -1.0},
           {"max_height": 1.0} ,
-          {"angle_min": -3.14},
+          {"angle_min": -3.1401},
           {"angle_max": 3.14},
           {"angle_increment": 0.001},
           {"scan_time": 0.1},
