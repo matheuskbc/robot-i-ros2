@@ -21,16 +21,19 @@ RUN pip install -U \
 COPY ./src/roomba_bringup ./src/roomba_bringup
 COPY ./src/sweep_ros ./src/sweep_ros
 COPY ./scripts ./scripts
+COPY ./src/roomba_navigation ./src/roomba_navigation
+COPY ./src/create_description ./src/create_description
 WORKDIR /usr/src/ros2_ws/src
 RUN git clone https://github.com/autonomylab/create_robot.git
 RUN cd create_robot && \
     git checkout foxy
 RUN git clone https://github.com/AutonomyLab/libcreate.git
+RUN touch create_robot/create_description/AMENT_IGNORE
 
 # Install ros depedencies
 WORKDIR /usr/src/ros2_ws/
 RUN . /opt/ros/foxy/setup.sh \
-    && apt-get update --fix-missing \
+    #&& apt-get update --fix-missing \
     && rosdep install --from-paths src -y --ignore-src
 
 # Install sweep-sdk

@@ -3,8 +3,11 @@ services:
   roomba_navigation:
     image: matheuskraemer/robot-i-ros2-roomba_navigation:latest
     network_mode: host
-    restart: always
     privileged: true
     container_name: roomba_navigation
     platform: linux/amd64
     restart: always
+    tty: true
+    volumes:
+      -
+        /dev:/dev
