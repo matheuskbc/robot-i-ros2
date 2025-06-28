@@ -15,3 +15,5 @@ services:
     volumes:
       - /dev:/dev
       - /home/ubuntu/Projects/robot-i-ros2/src:/usr/src/ros2_ws/src
+    environment:
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp

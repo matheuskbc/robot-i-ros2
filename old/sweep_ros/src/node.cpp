@@ -78,7 +78,7 @@ class SweeperDriver
 
 {
     public:
-        sweep::sweep* device;
+        std::unique_ptr<sweep::sweep> device;
 
         SweeperDriver(){
 
@@ -90,18 +90,22 @@ class SweeperDriver
             int sample_rate
         ){
             //Create Sweep Driver Object
-            device = new sweep::sweep{serial_port.c_str()};
+            device.reset(new sweep::sweep{serial_port.c_str(), 115200});
+
+            //Stop scanning
+            device->stop_scanning();
+            std::cout << "Stop scanning!" << std::endl; 
+
+            //Send Sample Rate
+            std::cout << "Setting sample rate..." << std::endl; 
+            device->set_sample_rate(sample_rate);
 
             std::cout << "Setting motor speed..." << std::endl; 
             //Send Rotation Speed
             device->set_motor_speed(rotation_speed);
-            std::cout << "Setting sample rate..." << std::endl; 
-
-            //Send Sample Rate
-            device->set_sample_rate(sample_rate);
-            std::cout << "Start scanning..." << std::endl; 
 
             //Start Scan
+            std::cout << "Start scanning..." << std::endl; 
             device->start_scanning();
             std::cout << "Scanning!" << std::endl; 
 

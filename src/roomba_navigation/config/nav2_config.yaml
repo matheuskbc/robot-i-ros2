@@ -11,7 +11,7 @@ controller_server:
     # (i.e. the computeVelocityCommands function of the plugin throwing an exception) 
     # before the nav2_msgs::action::FollowPath action fails. Setting it to the special value of -1.0 makes it 
     # infinite, 0 to disable, and any positive value for the appropriate timeout.
-    failure_tolerance: 0 #0.3
+    failure_tolerance: 0.0 #0.3
 
     progress_checker_plugins: ["progress_checker"]
     goal_checker_plugins: ["general_goal_checker"]
@@ -109,44 +109,53 @@ recoveries_server:
 
 bt_navigator:
   ros__parameters:
-    use_sim_time: False
     global_frame: map
     robot_base_frame: base_footprint
     odom_topic: odom
-    enable_groot_monitoring: False
-    groot_zmq_publisher_port: 1666
-    groot_zmq_server_port: 1667
-    default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
-    plugin_lib_names:
-    - nav2_compute_path_to_pose_action_bt_node
-    - nav2_follow_path_action_bt_node
-    - nav2_back_up_action_bt_node
-    - nav2_spin_action_bt_node
-    - nav2_wait_action_bt_node
-    - nav2_clear_costmap_service_bt_node
-    - nav2_is_stuck_condition_bt_node
-    - nav2_goal_reached_condition_bt_node
-    - nav2_goal_updated_condition_bt_node
-    - nav2_initial_pose_received_condition_bt_node
-    - nav2_reinitialize_global_localization_service_bt_node
-    - nav2_rate_controller_bt_node
-    - nav2_distance_controller_bt_node
-    - nav2_speed_controller_bt_node
-    - nav2_truncate_path_action_bt_node
-    - nav2_goal_updater_node_bt_node
-    - nav2_recovery_node_bt_node
-    - nav2_pipeline_sequence_bt_node
-    - nav2_round_robin_node_bt_node
-    - nav2_transform_available_condition_bt_node
-    - nav2_time_expired_condition_bt_node
-    - nav2_distance_traveled_condition_bt_node
+    bt_loop_duration: 10
+    filter_duration: 0.3
+    default_server_timeout: 20
+    wait_for_service_timeout: 1000
+    action_server_result_timeout: 900.0
+    service_introspection_mode: "disabled"
+    navigators: ["navigate_to_pose", "navigate_through_poses"]
+    navigate_to_pose:
+      plugin: "nav2_bt_navigator::NavigateToPoseNavigator"
+      enable_groot_monitoring: false
+      groot_server_port: 1667
+    navigate_through_poses:
+      plugin: "nav2_bt_navigator::NavigateThroughPosesNavigator"
+      enable_groot_monitoring: false
+      groot_server_port: 1669
+    # 'default_nav_through_poses_bt_xml' and 'default_nav_to_pose_bt_xml' are use defaults:
+    # nav2_bt_navigator/navigate_to_pose_w_replanning_and_recovery.xml
+    # nav2_bt_navigator/navigate_through_poses_w_replanning_and_recovery.xml
+    # They can be set here or via a RewrittenYaml remap from a parent launch file to Nav2.
+
+    # plugin_lib_names is used to add custom BT plugins to the executor (vector of strings).
+    # Built-in plugins are added automatically
+    # plugin_lib_names: []
+    error_code_name_prefixes:
+      - assisted_teleop
+      - backup
+      - compute_path
+      - dock_robot
+      - drive_on_heading
+      - follow_path
+      - nav_thru_poses
+      - nav_to_pose
+      - route
+      - spin
+      - smoother
+      - undock_robot
+      - wait
 
 local_costmap:
   local_costmap:
     ros__parameters:
       update_frequency: 5.0
       publish_frequency: 2.0
-      global_frame: odom
+      global_frame: map
       robot_base_frame: base_footprint
       rolling_window: true
       width: 3
