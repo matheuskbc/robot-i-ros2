@@ -14,6 +14,7 @@ services:
     tty: true
     volumes:
       - /dev:/dev
-      - /home/ubuntu/Projects/robot-i-ros2/src:/usr/src/ros2_ws/src
+      - /home/ubuntu/Projects/robot-i-ros2/src/roomba_bringup:/usr/src/ros2_ws/src/roomba_bringup
+      - /home/ubuntu/Projects/robot-i-ros2/src/roomba_navigation:/usr/src/ros2_ws/src/roomba_navigation
     environment:
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp

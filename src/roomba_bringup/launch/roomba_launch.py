@@ -19,14 +19,12 @@ def generate_launch_description():
         'KEEPOUT_ZONE_ENABLED': True,
         'SPEED_ZONE_ENABLED': True,
     }
-    map_path="/usr/src/ros2_ws/src/roomba_navigation/map/house_mettmanner_5.yaml"
+    map_path="/usr/src/ros2_ws/src/roomba_navigation/map/house_mettmanner_6.yaml"
     nav2_param=os.path.join(get_package_share_directory("roomba_bringup"), "config", "nav2_param.yaml")
     use_sim_time = "false"
     autostart = "true"
-    use_composition = "true"
 
-
-    rplidar_path_ir = get_package_share_directory("rplidar_ros")
+    rplidar_ros_path_ir = get_package_share_directory("rplidar_ros")
     roomba_bringup_path_ir = get_package_share_directory("roomba_bringup")
     nav2_bringup_path_ir = get_package_share_directory("nav2_bringup")
 
@@ -49,7 +47,8 @@ def generate_launch_description():
             "params_file": nav2_param,
             "use_sim_time" : use_sim_time,
             "autostart": autostart,
-            "use_composition": use_composition,
+            'use_composition': "True",
+            "slam": "False"
         }.items()
     )
 
